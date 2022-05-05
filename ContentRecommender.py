@@ -25,12 +25,7 @@ class ContentRecommender(ModelRecommender):
         movies_tags = pd.merge(pd.read_csv('data-small/tags.csv',dtype={'id':'int32','title':'str','tag':'str'}), movies, how='inner')
         movies_tags['tag'] = movies_tags['tag'].str.lower()
 
-
-        movies_tags.to_csv('test.csv')
         movies_tags_grouped = movies_tags.pivot_table(index='title', columns=['tag'])
-        
-        movies_tags_grouped.to_csv('test2.csv')
-
         movies_tags_grouped[movies_tags_grouped.notna()] = 1
         movies_tags_grouped = movies_tags_grouped.fillna(0)
         return movies_tags_grouped
